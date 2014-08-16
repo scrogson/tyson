@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
   while(1) {
     char* input = readline("tyson> ");
     add_history(input);
-  
+
     /* Parse the input */
     mpc_result_t result;
     if (mpc_parse("<stdin>", input, Tyson, &result)) {
