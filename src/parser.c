@@ -183,9 +183,9 @@ lval* builtin_list(lval* a) {
 
 lval* builtin_hd(lval* a) {
   /* Check error conditions */
-  LASSERT(a, (a->count != 1), "Function 'hd' passed too many arguments");
-  LASSERT(a, (a->cell[0]->type != LVAL_QEXPR), "Function 'hd' passed incorrect type");
-  LASSERT(a, (a->cell[0]->count == 0), "Function 'hd' passed {}");
+  LASSERT(a, (a->count == 1),                  "Function 'hd' passed too many arguments");
+  LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'hd' passed incorrect type");
+  LASSERT(a, (a->cell[0]->count != 0),         "Function 'hd' passed {}");
 
   lval* v = lval_take(a, 0);
   while (v->count > 1) { lval_del(lval_pop(v, 1)); }
@@ -194,19 +194,19 @@ lval* builtin_hd(lval* a) {
 }
 
 lval* builtin_tl(lval* a) {
-  LASSERT(a, (a->count != 1), "Function 'tl' passed too many arguments");
-  LASSERT(a, (a->cell[0]->type != LVAL_QEXPR), "Function 'tl' passed incorrect type");
-  LASSERT(a, (a->cell[0]->count == 0), "Function 'tl' passed {}");
+  LASSERT(a, (a->count == 1),                  "Function 'tl' passed too many arguments");
+  LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'tl' passed incorrect type");
+  LASSERT(a, (a->cell[0]->count != 0),         "Function 'tl' passed {}");
 
   lval* v = lval_take(a, 0);
-  lval_del(lval_pop(a, 0));
+  lval_del(lval_pop(v, 0));
 
   return v;
 }
 
 lval* builtin_eval(lval* a) {
-  LASSERT(a, (a->count == 1), "Function 'eval' passed too many arguments");
-  LASSERT(a, (a->cell[0]->type != LVAL_QEXPR), "Function 'eval' passed incorrect type");
+  LASSERT(a, (a->count == 1),                  "Function 'eval' passed too many arguments");
+  LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'eval' passed incorrect type");
 
   lval* x = lval_take(a, 0);
   x->type = LVAL_SEXPR;
